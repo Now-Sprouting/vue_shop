@@ -365,7 +365,7 @@ export default {
           }
         )
         if (res.meta.status !== 200) {
-          this.$message.error('设置角色成功')
+          this.$message.error('设置角色失败')
         } else {
           this.$message.success('分配角色成功')
           this.getUserlist()
