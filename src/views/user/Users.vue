@@ -3,9 +3,8 @@
     <!-- 面包屑导航区 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/welcome' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>活动管理</el-breadcrumb-item>
-      <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-      <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+      <el-breadcrumb-item>用户管理</el-breadcrumb-item>
+      <el-breadcrumb-item>用户列表</el-breadcrumb-item>
     </el-breadcrumb>
     <!-- 卡片视图区域 -->
     <el-card>
@@ -56,7 +55,12 @@
             ></el-button>
             <el-tooltip effect="light" content="分配角色" placement="top" :enterable="false">
               <!-- setting -->
-              <el-button type="warning" icon="el-icon-setting" size="mini"></el-button>
+              <el-button
+                type="warning"
+                icon="el-icon-setting"
+                size="mini"
+                @click="assignRole(scope.row)"
+              ></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -73,7 +77,12 @@
       ></el-pagination>
     </el-card>
     <!-- 添加用户产生的对话框 -->
-    <el-dialog title="提示" :visible.sync="addDialogisVisibal" width="50%" @close="addDialogisClose">
+    <el-dialog
+      title="添加用户"
+      :visible.sync="addDialogisVisibal"
+      width="50%"
+      @close="addDialogisClose"
+    >
       <!-- 添加用户表单 -->
       <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="70px">
         <el-form-item label="用户名" prop="username">
@@ -116,6 +125,26 @@
       <span slot="footer" class="dialog-footer">
         <el-button @click="editDialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="editUser">确 定</el-button>
+      </span>
+    </el-dialog>
+    <!-- 分配角色对话框 -->
+    <el-dialog title="分配角色" :visible.sync="assigRoledialogVisible" width="50%" @close="assigRoledialogClose">
+      <p>当前用户: {{userInfo.username}}</p>
+      <p>当前角色: {{userInfo.role_name}}</p>
+      <p>
+        分配新角色:
+        <el-select v-model="selectedRoleId" placeholder="请选择">
+          <el-option
+            v-for="item in roleList"
+            :key="item.id"
+            :label="item.roleName"
+            :value="item.id"
+          ></el-option>
+        </el-select>
+      </p>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="assigRoledialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveRole">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -200,7 +229,11 @@ export default {
           { required: true, message: '请输入手机号', trigger: 'blur' },
           { validator: checkMobile, trigger: 'blur' }
         ]
-      }
+      },
+      assigRoledialogVisible: false,
+      userInfo: {},
+      roleList: [],
+      selectedRoleId: ''
     }
   },
 
@@ -282,7 +315,7 @@ export default {
         } else {
           this.editDialogVisible = false
           this.getUserlist()
-          this.$message.success('更新用户信心成功')
+          this.$message.success('更新用户信息成功')
         }
       })
     },
@@ -310,6 +343,40 @@ export default {
           this.getUserlist()
         }
       }
+    },
+    // 分配角色
+    async assignRole(userInfo) {
+      this.userInfo = userInfo
+      const { data: res } = await this.$http.get('roles')
+      if (res.meta.status !== 200) return this.$message.error('获角色列表失败')
+      this.roleList = res.data
+      // console.log(this.roleList)
+      this.assigRoledialogVisible = true
+    },
+    // 点击分配角色确定按钮
+    async saveRole() {
+      if (!this.selectedRoleId) {
+        return this.$message.error('请选择角色')
+      } else {
+        const { data: res } = await this.$http.put(
+          `users/${this.userInfo.id}/role`,
+          {
+            rid: this.selectedRoleId
+          }
+        )
+        if (res.meta.status !== 200) {
+          this.$message.error('设置角色成功')
+        } else {
+          this.$message.success('分配角色成功')
+          this.getUserlist()
+          this.assigRoledialogVisible = false
+        }
+      }
+    },
+    // 关闭分配角色对话框
+    assigRoledialogClose(){
+      this.selectedRoleId = ''
+      this.userInfo = {}
     }
   },
   created() {
@@ -327,5 +394,8 @@ export default {
 }
 .el-pagination {
   margin-top: 20px;
+}
+p {
+  font-size: 16px;
 }
 </style>
