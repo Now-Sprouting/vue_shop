@@ -7,3 +7,7 @@ html,body,#app{
     font-size: 15px;
     margin-bottom: 20px;
 }
+/* 级联选择框的长度占全屏的解决方案 */
+.el-cascader-panel {
+    height: 200px;
+}
