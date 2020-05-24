@@ -11,3 +11,7 @@ html,body,#app{
 .el-cascader-panel {
     height: 200px;
 }
+/* Add下步骤条文字大小 */
+.el-step__title{
+    font-size: 14px;
+}
