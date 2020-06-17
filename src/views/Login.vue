@@ -19,7 +19,7 @@
         </el-form-item>
         <!-- 密码 -->
         <el-form-item prop="password">
-          <el-input v-model="loginForm.password" prefix-icon="iconfont icon-mimaffffffpx"></el-input>
+          <el-input v-model="loginForm.password" prefix-icon="iconfont icon-mimaffffffpx" show-password>></el-input>
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item class="btns">
@@ -37,8 +37,8 @@ export default {
     return {
       // 表单数据双向绑定
       loginForm: {
-        username: 'admin',
-        password: '123456'
+        username: '',
+        password: ''
       },
       // 用户名密码初验证
       loginRules: {
@@ -92,7 +92,7 @@ export default {
 
 <style lang="less" scoped>
 .login_container {
-  background-color: #2d4d6d;
+  background-color: #BBE6D6;
   height: 100%;
 }
 .login_box {

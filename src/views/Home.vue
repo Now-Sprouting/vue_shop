@@ -1,8 +1,7 @@
 <template>
   <el-container class="home_container">
     <!-- aside -->
-    <el-aside width="isCollapse ? '64px' : '500px'">
-      <el-button round size="small" type="info" @click="tollogeCollapse" class="menuButton">|||</el-button>
+    <el-aside width='200px'>      
       <el-menu
         :default-active="activePath"
         class="el-menu-vertical-demo"
@@ -40,7 +39,7 @@
       <el-header>
         <div>
           <img src alt />
-          <span>电商后台管理系统</span>
+          <span>青青电商</span>
         </div>
         <el-button round size="medium" type="info" @click="logout">退出</el-button>
       </el-header>
@@ -49,7 +48,7 @@
         <router-view></router-view>
       </el-main>
       <!-- footer -->
-      <el-footer>Footer</el-footer>
+      <el-footer></el-footer>
     </el-container>
   </el-container>
 </template>
@@ -110,7 +109,7 @@ export default {
 .el-aside {
   background-color: #ffffff;
   .el-menu {
-    margin-top: 30px;
+    margin-top: 50px;
     .el-submenu i {
       font-size: 20px;
       color: #2c3e50;

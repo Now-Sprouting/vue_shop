@@ -15,7 +15,7 @@ import 'quill/dist/quill.snow.css' // for snow theme
 import 'quill/dist/quill.bubble.css' // for bubble theme
 
 import axios from 'axios'
-axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
+axios.defaults.baseURL = 'http://47.92.6.241:8888/api/private/v1/'
 // 按照接口文档中,除了请求login以外的都需要做请求拦截的处理
 axios.interceptors.request.use(config => {
   config.headers.Authorization = window.sessionStorage.getItem('token')
