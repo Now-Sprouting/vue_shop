@@ -12,7 +12,7 @@
         <el-col :span="8">
           <el-input v-model="queryInfo.query" clearable @clear="getUserlist">
             <el-button slot="append" icon="el-icon-search" @click="getUserlist"></el-button>
-          </el-input>
+          </el-input> 
         </el-col>
         <el-col :span="4">
           <el-button type="primary" size="small" @click="addDialogisVisibal=true">添加用户</el-button>
@@ -73,7 +73,7 @@
         :page-sizes="[2, 3, 5, 10]"
         :page-size="queryInfo.pagesize"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="20"
+        :total="total"
       ></el-pagination>
     </el-card>
     <!-- 添加用户产生的对话框 -->
@@ -152,6 +152,7 @@
 <script>
 export default {
   data() {
+    // element ui中提供的表单自定义校验规则(因为缺少部分规则)
     // 验证邮箱的规则
     var checkEmail = (rule, value, cb) => {
       // 验证邮箱的正则表达式
@@ -244,6 +245,7 @@ export default {
         params: this.queryInfo
       })
       this.userList = res.data.users
+      this.total = res.data.total
     },
     //分页功能
     handleSizeChange(newSize) {

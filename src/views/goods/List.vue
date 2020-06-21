@@ -31,7 +31,7 @@
         <el-table-column label="操作" width="180px">
           <!-- 作用域插槽 -->
           <template slot-scope="scope">
-            <el-button type="primary" icon="el-icon-edit" @ckick="ndn(scope.row)"></el-button>
+            <!-- <el-button type="primary" icon="el-icon-edit" @ckick="ndn(scope.row)"></el-button> -->
             <el-button type="danger" icon="el-icon-delete" @click="removeById(scope.row.goods_id)"></el-button>
           </template>
         </el-table-column>

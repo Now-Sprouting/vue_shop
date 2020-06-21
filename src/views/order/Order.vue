@@ -39,12 +39,12 @@
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button size="mini" type="primary" icon="el-icon-edit" @click="showBox(scope.row)"></el-button>
-            <el-button
+            <!-- <el-button
               size="mini"
               type="success"
               icon="el-icon-location"
               @click="showProgressBox(scope.row)"
-            ></el-button>
+            ></el-button> -->
           </template>
         </el-table-column>
       </el-table>
